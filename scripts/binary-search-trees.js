@@ -37,8 +37,8 @@ class Tree {
   }
 
   deleteItem(current = this.root, value) {
-    if (current === null) {
-      return current;
+    if (!current) {
+      return;
     }
     if (current.data > value) {
       current.left = this.deleteItem(current.left, value);
@@ -52,6 +52,20 @@ class Tree {
       current.right = this.deleteItem(current.right, succ.data);
     }
     return current;
+  }
+
+  findItem(current = this.root, value) {
+    if (!current) {
+      return;
+    }
+    if (current.data === value) {
+      return current;
+    }
+    if (current.data > value) {
+      return this.findItem(current.left, value);
+    } else if (current.data < value) {
+      return this.findItem(current.right, value);
+    }
   }
 }
 
@@ -90,6 +104,8 @@ tree.insert(tree.root, 14);
 tree.deleteItem(tree.root, 14);
 
 prettyPrint(tree.root);
+
+console.log(tree.findItem(tree.root, 9));
 
 // tree.deleteItem();
 
