@@ -28,7 +28,31 @@ class Tree {
     return current;
   }
 
-  deleteItem(value) {}
+  getSuccessor(curr) {
+    curr = curr.right;
+    while (curr !== null && curr.left !== null) {
+      curr = curr.left;
+    }
+    return curr;
+  }
+
+  deleteItem(current = this.root, value) {
+    if (current === null) {
+      return current;
+    }
+    if (current.data > value) {
+      current.left = this.deleteItem(current.left, value);
+    } else if (current.data < value) {
+      current.right = this.deleteItem(current.right, value);
+    } else {
+      if (current.left === null) return current.right;
+      if (current.right === null) return current.left;
+      let succ = this.getSuccessor(current);
+      current.data = succ.data;
+      current.right = this.deleteItem(current.right, succ.data);
+    }
+    return current;
+  }
 }
 
 function buildTree(array, start = 0, end = array.length - 1) {
@@ -63,6 +87,7 @@ const tree = new Tree(array);
 const testArr = [0, 1, 2, 3, 4, 5, 6, 7];
 
 tree.insert(tree.root, 14);
+tree.deleteItem(tree.root, 14);
 
 prettyPrint(tree.root);
 
