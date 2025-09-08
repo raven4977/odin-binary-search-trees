@@ -31,6 +31,30 @@ class Tree {
       }
     }
   }
+  deleteItem(value, current = this.root) {
+    if (!current) {
+      return current;
+    }
+    if (current.data > value) {
+      current.left = this.deleteItem(value, current.left);
+    } else if (current.data < value) {
+      current.right = this.deleteItem(value, current.right);
+    } else {
+      if (!current.left) return current.right;
+      if (!current.right) return current.left;
+      let succ = this.getSuccessor(current);
+      current.data = succ.data;
+      current.right = this.deleteItem(current.right, succ.data);
+    }
+    return current;
+  }
+  getSuccessor(curr) {
+    curr = curr.right;
+    while (curr !== null && curr.left !== null) {
+      curr = curr.left;
+    }
+    return curr;
+  }
 }
 
 function buildTree(arr, start, end) {
