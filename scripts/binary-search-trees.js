@@ -11,6 +11,26 @@ class Tree {
     this.arr = arr;
     this.root = buildTree(arr, 0, arr.length - 1);
   }
+
+  insert(value) {
+    let current = this.root;
+    while (current) {
+      if (value > current.data) {
+        if (!current.right) {
+          current.right = new Node(value);
+          return;
+        }
+        current = current.right;
+      }
+      if (value < current.data) {
+        if (!current.left) {
+          current.left = new Node(value);
+          return;
+        }
+        current = current.left;
+      }
+    }
+  }
 }
 
 function buildTree(arr, start, end) {
@@ -23,3 +43,16 @@ function buildTree(arr, start, end) {
 }
 
 const array = [1, 2, 3, 4, 5, 6, 7];
+
+const prettyPrint = (node, prefix = "", isLeft = true) => {
+  if (node === null) {
+    return;
+  }
+  if (node.right !== null) {
+    prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+  }
+  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+  if (node.left !== null) {
+    prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+  }
+};
