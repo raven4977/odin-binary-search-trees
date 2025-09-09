@@ -12,8 +12,12 @@ class Tree {
     this.root = buildTree(arr, 0, arr.length - 1);
   }
 
-  insert(value, current = this.root) {
-    if (!current) return new Node(value);
+  insert(value) {
+    let current = this.root;
+    if (!this.root) {
+      this.root = new Node(value);
+      return this.root;
+    }
 
     let parent = null;
     while (current) {
@@ -31,7 +35,7 @@ class Tree {
     } else {
       parent.right = new Node(value);
     }
-    return current;
+    return this.root;
   }
 
   deleteItem(value, current = this.root) {
@@ -47,7 +51,7 @@ class Tree {
       if (!current.right) return current.left;
       let succ = this.getSuccessor(current);
       current.data = succ.data;
-      current.right = this.deleteItem(current.right, succ.data);
+      current.right = this.deleteItem(succ.data, current.right);
     }
     return current;
   }
@@ -60,7 +64,8 @@ class Tree {
     return curr;
   }
 
-  find(value, current = this.root) {
+  find(value) {
+    let current = this.root;
     while (current) {
       if (current.data > value) {
         current = current.left;
@@ -71,6 +76,19 @@ class Tree {
       }
     }
     return null;
+  }
+  levelOrderForEach(callback, current = this.root) {
+    if (!callback) throw new Error("Callback required");
+    if (!current) return;
+    const queue = [];
+    queue.push(current);
+    while (queue.length > 0) {
+      current = queue[0];
+      callback(current);
+      if (current.left) queue.push(current.left);
+      if (current.right) queue.push(current.right);
+      queue.shift();
+    }
   }
 }
 
@@ -109,6 +127,10 @@ tree.insert(10);
 tree.insert(11);
 
 console.log(tree.find(11));
+
+tree.levelOrderForEach((node) => {
+  console.log(node);
+});
 
 console.log(tree);
 
