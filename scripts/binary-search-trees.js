@@ -12,24 +12,26 @@ class Tree {
     this.root = buildTree(arr, 0, arr.length - 1);
   }
 
-  insert(value) {
-    let current = this.root;
+  insert(value, current = this.root) {
+    if (!current) return new Node(value);
+
+    let parent = null;
     while (current) {
-      if (value > current.data) {
-        if (!current.right) {
-          current.right = new Node(value);
-          return;
-        }
-        current = current.right;
-      }
-      if (value < current.data) {
-        if (!current.left) {
-          current.left = new Node(value);
-          return;
-        }
+      parent = current;
+      if (current.data > value) {
         current = current.left;
+      } else if (current.data < value) {
+        current = current.right;
+      } else {
+        return current;
       }
     }
+    if (parent.data > value) {
+      parent.left = new Node(value);
+    } else {
+      parent.right = new Node(value);
+    }
+    return current;
   }
   deleteItem(value, current = this.root) {
     if (!current) {
@@ -50,7 +52,7 @@ class Tree {
   }
   getSuccessor(curr) {
     curr = curr.right;
-    while (curr !== null && curr.left !== null) {
+    while (curr && curr.left) {
       curr = curr.left;
     }
     return curr;
@@ -80,3 +82,20 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
   }
 };
+
+const tree = new Tree(array);
+const newTree = new Tree([]);
+
+console.log(newTree.insert(11));
+
+tree.insert(8);
+
+tree.deleteItem(8);
+
+tree.insert(10);
+
+tree.insert(11);
+
+console.log(tree);
+
+prettyPrint(tree.root);
