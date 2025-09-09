@@ -33,6 +33,7 @@ class Tree {
     }
     return current;
   }
+
   deleteItem(value, current = this.root) {
     if (!current) {
       return current;
@@ -50,12 +51,26 @@ class Tree {
     }
     return current;
   }
+
   getSuccessor(curr) {
     curr = curr.right;
     while (curr && curr.left) {
       curr = curr.left;
     }
     return curr;
+  }
+
+  find(value, current = this.root) {
+    while (current) {
+      if (current.data > value) {
+        current = current.left;
+      } else if (current.data < value) {
+        current = current.right;
+      } else {
+        return current;
+      }
+    }
+    return null;
   }
 }
 
@@ -84,9 +99,6 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 const tree = new Tree(array);
-const newTree = new Tree([]);
-
-console.log(newTree.insert(11));
 
 tree.insert(8);
 
@@ -95,6 +107,8 @@ tree.deleteItem(8);
 tree.insert(10);
 
 tree.insert(11);
+
+console.log(tree.find(11));
 
 console.log(tree);
 
