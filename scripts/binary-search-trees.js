@@ -90,6 +90,15 @@ class Tree {
       queue.shift();
     }
   }
+  inOrderForEach(callback, current = this.root) {}
+  preOrderForEach(callback, current = this.root) {
+    if (!callback) throw new Error("Callback required");
+    if (!current) return;
+    callback(current);
+    this.preOrderForEach(callback, current.left);
+    this.preOrderForEach(callback, current.right);
+  }
+  postOrderForEach(callback, current = this.root) {}
 }
 
 function buildTree(arr, start, end) {
@@ -128,9 +137,9 @@ tree.insert(11);
 
 console.log(tree.find(11));
 
-tree.levelOrderForEach((node) => {
-  console.log(node);
-});
+// tree.levelOrderForEach((node) => console.log(node));
+
+tree.preOrderForEach((node) => console.log(node));
 
 console.log(tree);
 
