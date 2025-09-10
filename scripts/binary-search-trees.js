@@ -104,7 +104,13 @@ class Tree {
     this.preOrderForEach(callback, current.left);
     this.preOrderForEach(callback, current.right);
   }
-  postOrderForEach(callback, current = this.root) {}
+  postOrderForEach(callback, current = this.root) {
+    if (!callback) throw new Error("Callback required");
+    if (!current) return;
+    this.postOrderForEach(callback, current.left);
+    this.postOrderForEach(callback, current.right);
+    callback(current);
+  }
 }
 
 function buildTree(arr, start, end) {
@@ -148,6 +154,8 @@ console.log(tree.find(11));
 // tree.preOrderForEach((node) => console.log(node));
 
 // tree.inOrderForEach((node) => console.log(node));
+
+tree.postOrderForEach((node) => console.log(node));
 
 console.log(tree);
 
