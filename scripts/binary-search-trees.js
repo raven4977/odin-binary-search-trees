@@ -111,6 +111,13 @@ class Tree {
     this.postOrderForEach(callback, current.right);
     callback(current);
   }
+  depth(value, current = this.root, depth = 0) {
+    if (!current) return;
+    if (current.data === value) return depth;
+    depth++;
+    if (value > current.data) return this.depth(value, current.right, depth);
+    return this.depth(value, current.left, depth);
+  }
 }
 
 function buildTree(arr, start, end) {
@@ -147,7 +154,7 @@ tree.insert(10);
 
 tree.insert(11);
 
-console.log(tree.find(11));
+// console.log(tree.find(11));
 
 // tree.levelOrderForEach((node) => console.log(node));
 
@@ -155,7 +162,9 @@ console.log(tree.find(11));
 
 // tree.inOrderForEach((node) => console.log(node));
 
-tree.postOrderForEach((node) => console.log(node));
+// tree.postOrderForEach((node) => console.log(node));
+
+console.log(tree.depth(1));
 
 console.log(tree);
 
