@@ -90,7 +90,13 @@ class Tree {
       queue.shift();
     }
   }
-  inOrderForEach(callback, current = this.root) {}
+  inOrderForEach(callback, current = this.root) {
+    if (!callback) throw new Error("Callback required");
+    if (!current) return;
+    this.inOrderForEach(callback, current.left);
+    callback(current);
+    this.inOrderForEach(callback, current.right);
+  }
   preOrderForEach(callback, current = this.root) {
     if (!callback) throw new Error("Callback required");
     if (!current) return;
@@ -139,7 +145,9 @@ console.log(tree.find(11));
 
 // tree.levelOrderForEach((node) => console.log(node));
 
-tree.preOrderForEach((node) => console.log(node));
+// tree.preOrderForEach((node) => console.log(node));
+
+// tree.inOrderForEach((node) => console.log(node));
 
 console.log(tree);
 
