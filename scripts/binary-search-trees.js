@@ -77,6 +77,7 @@ class Tree {
     }
     return null;
   }
+
   levelOrderForEach(callback, current = this.root) {
     if (!callback) throw new Error("Callback required");
     if (!current) return;
@@ -90,6 +91,7 @@ class Tree {
       queue.shift();
     }
   }
+
   inOrderForEach(callback, current = this.root) {
     if (!callback) throw new Error("Callback required");
     if (!current) return;
@@ -97,6 +99,7 @@ class Tree {
     callback(current);
     this.inOrderForEach(callback, current.right);
   }
+
   preOrderForEach(callback, current = this.root) {
     if (!callback) throw new Error("Callback required");
     if (!current) return;
@@ -104,6 +107,7 @@ class Tree {
     this.preOrderForEach(callback, current.left);
     this.preOrderForEach(callback, current.right);
   }
+
   postOrderForEach(callback, current = this.root) {
     if (!callback) throw new Error("Callback required");
     if (!current) return;
@@ -111,6 +115,25 @@ class Tree {
     this.postOrderForEach(callback, current.right);
     callback(current);
   }
+
+  height(value, current = this.root, height) {
+    if (!current) return null;
+    if (value > current.data) {
+      this.height(value, current.right, height);
+    } else if ((value < current.data, height)) {
+      this.height(value, current.left, height);
+    } else {
+      return this.findHeight(current);
+    }
+  }
+
+  findHeight(node) {
+    if (!node) return -1;
+    const leftHeight = this.findHeight(node.left);
+    const rightHeight = this.findHeight(node.right);
+    return 1 + Math.max(leftHeight, rightHeight);
+  }
+
   depth(value, current = this.root, depth = 0) {
     if (!current) return;
     if (current.data === value) return depth;
@@ -163,6 +186,8 @@ tree.insert(11);
 // tree.inOrderForEach((node) => console.log(node));
 
 // tree.postOrderForEach((node) => console.log(node));
+
+console.log(tree.height(4));
 
 console.log(tree.depth(1));
 
