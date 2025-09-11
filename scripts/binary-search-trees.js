@@ -116,12 +116,12 @@ class Tree {
     callback(current);
   }
 
-  height(value, current = this.root, height) {
+  height(value, current = this.root) {
     if (!current) return null;
     if (value > current.data) {
-      this.height(value, current.right, height);
-    } else if ((value < current.data, height)) {
-      this.height(value, current.left, height);
+      this.height(value, current.right);
+    } else if ((value < current.data)) {
+      this.height(value, current.left);
     } else {
       return this.findHeight(current);
     }
@@ -140,6 +140,10 @@ class Tree {
     depth++;
     if (value > current.data) return this.depth(value, current.right, depth);
     return this.depth(value, current.left, depth);
+  }
+
+  isBalanced(current = this.root) {
+    this.height(current.left)
   }
 }
 
