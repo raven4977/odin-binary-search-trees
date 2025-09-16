@@ -169,7 +169,7 @@ function buildTree(arr, start, end) {
   return root;
 }
 
-const array = [1, 2, 3, 4, 5, 6, 7];
+const array = [10, 20, 30, 40, 50, 60, 70, 80, 90];
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
@@ -190,19 +190,19 @@ tree.insert(8);
 
 tree.deleteItem(8);
 
-tree.insert(10);
+tree.insert(120);
 
-tree.insert(11);
+tree.insert(110);
 
-// console.log(tree.find(11));
+console.log(tree.find(11));
 
-// tree.levelOrderForEach((node) => console.log(node));
+tree.levelOrderForEach((node) => console.log(node));
 
-// tree.preOrderForEach((node) => console.log(node));
+tree.preOrderForEach((node) => console.log(node));
 
-// tree.inOrderForEach((node) => console.log(node));
+tree.inOrderForEach((node) => console.log(node));
 
-// tree.postOrderForEach((node) => console.log(node));
+tree.postOrderForEach((node) => console.log(node));
 
 console.log(tree.height(4));
 
@@ -211,6 +211,14 @@ console.log(tree.depth(1));
 console.log(tree.isBalanced());
 
 console.log(tree.rebalance());
+
+console.log(tree.isBalanced());
+
+tree.preOrderForEach((node) => console.log(node));
+
+tree.inOrderForEach((node) => console.log(node));
+
+tree.postOrderForEach((node) => console.log(node));
 
 console.log(tree);
 
