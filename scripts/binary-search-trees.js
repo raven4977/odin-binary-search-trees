@@ -149,6 +149,15 @@ class Tree {
     if (Math.abs(leftHeight - rightHeight) > 1) return false;
     return this.isBalanced(current.left) && this.isBalanced(current.right);
   }
+
+  rebalance() {
+    const balanced = this.isBalanced();
+    if (balanced) return;
+    const array = [];
+    this.inOrderForEach((node) => array.push(node.data));
+    this.arr = array;
+    this.root = buildTree(this.arr, 0, this.arr.length - 1);
+  }
 }
 
 function buildTree(arr, start, end) {
@@ -200,6 +209,8 @@ console.log(tree.height(4));
 console.log(tree.depth(1));
 
 console.log(tree.isBalanced());
+
+console.log(tree.rebalance());
 
 console.log(tree);
 
