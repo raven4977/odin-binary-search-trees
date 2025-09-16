@@ -120,7 +120,7 @@ class Tree {
     if (!current) return null;
     if (value > current.data) {
       this.height(value, current.right);
-    } else if ((value < current.data)) {
+    } else if (value < current.data) {
       this.height(value, current.left);
     } else {
       return this.findHeight(current);
@@ -143,7 +143,11 @@ class Tree {
   }
 
   isBalanced(current = this.root) {
-    this.height(current.left)
+    if (!current) return true;
+    const leftHeight = this.findHeight(current.left);
+    const rightHeight = this.findHeight(current.right);
+    if (Math.abs(leftHeight - rightHeight) > 1) return false;
+    return this.isBalanced(current.left) && this.isBalanced(current.right);
   }
 }
 
@@ -194,6 +198,8 @@ tree.insert(11);
 console.log(tree.height(4));
 
 console.log(tree.depth(1));
+
+console.log(tree.isBalanced());
 
 console.log(tree);
 
